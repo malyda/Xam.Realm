@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:Xam.Realm"
              x:Class="Xam.Realm.MainPage">
 
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+    <StackLayout>
+        <ListView x:Name="notesListView"></ListView>
+    </StackLayout>
 
 </ContentPage>
