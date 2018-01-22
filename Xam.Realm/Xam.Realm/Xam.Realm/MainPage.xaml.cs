@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Realms;
+using Xam.Realm.Model.Entity;
 
 namespace Xam.Realm
 {
@@ -24,13 +25,18 @@ namespace Xam.Realm
 	        {
 	            ID = vEmpId,
                 Text = "note text"
+                ,Category = new Category()
+	            {
+                    ID = RealmDB.All<Category>().Count() + 1,
+                    Name = "Category name"
+                }
 	        };
 	        RealmDB.Write(() => {
 	            vEmployee = RealmDB.Add(vEmployee);
 	        });
 
 
-            var allNotes = RealmDB.All<Note>();
+            var allNotes = new List<Note>(RealmDB.All<Note>());
 	        notesListView.ItemsSource = allNotes;
 	    }
 	}
