@@ -5,7 +5,7 @@
              x:Class="Xam.Realm.MainPage">
 
     <StackLayout>
-        <ListView x:Name="notesListView"></ListView>
+        <ListView ItemsSource="{Binding Path=Notes}"></ListView>
     </StackLayout>
 
 </ContentPage>

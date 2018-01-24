@@ -2,17 +2,17 @@
 
 namespace Xam.Realm.Model.Entity
 {
-    class Note: RealmObject
+    public class Note: RealmObject
     {
         [PrimaryKey]
-        public long ID { get; set; }
+        public int ID { get; set; }
         public string Text { get; set; }
 
         public Category Category { get; set; }
 
         public override string ToString()
         {
-            return $"ID: {ID}, Text {Text}";
+            return $"ID: {ID}, Text {Text}, Category {Category.Name}";
         }
     }
 }

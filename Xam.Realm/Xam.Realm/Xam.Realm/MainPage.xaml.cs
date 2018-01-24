@@ -1,44 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Realms;
+using Xam.Realm.Model.DataAccess.Repository;
 using Xam.Realm.Model.Entity;
 
 namespace Xam.Realm
 {
 	public partial class MainPage : ContentPage
 	{
+	    private ObservableCollection<Note> _notes;
+        public ObservableCollection<Note> Notes {
+            get => _notes;
+            set
+            {
+                _notes = value;
+                OnPropertyChanged("Notes");
+            }
+        }
 		public MainPage()
 		{
 			InitializeComponent();
-		}
+		    this.BindingContext = this;	    
+        }
 	    protected override void OnAppearing()
 	    {
 	        base.OnAppearing();
-	        var RealmDB = Realms.Realm.GetInstance();
-
-	        var vEmpId = RealmDB.All<Note>().Count() + 1;
-	        var vEmployee = new Note()
+	        
+	        
+            NoteRepository noteRepository = new NoteRepository();
+            
+	        Note note = new Note()
 	        {
-	            ID = vEmpId,
-                Text = "note text"
-                ,Category = new Category()
-	            {
-                    ID = RealmDB.All<Category>().Count() + 1,
-                    Name = "Category name"
-                }
+	            //ID = 1,
+	            Text = "cleared text"
 	        };
-	        RealmDB.Write(() => {
-	            vEmployee = RealmDB.Add(vEmployee);
-	        });
 
+            Category category = new Category()
+	        {
+	            Name = "Category name"
+	        };
 
-            var allNotes = new List<Note>(RealmDB.All<Note>());
-	        notesListView.ItemsSource = allNotes;
-	    }
+	        note.Category = category;
+
+            noteRepository.AddNote(note);
+
+	        
+            Notes = new ObservableCollection<Note>(noteRepository.GetAllNotes());
+        }
 	}
 }
 
